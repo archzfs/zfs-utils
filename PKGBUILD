@@ -5,10 +5,10 @@
 #
 # http://github.com/archzfs/archzfs
 #
-pkgname="zfs-utils-common"
+pkgname="zfs-utils"
 
 pkgver=0.7.11
-pkgrel=2
+pkgrel=1
 pkgdesc="Kernel module support files for the Zettabyte File System."
 makedepends=()
 arch=("x86_64")
@@ -28,7 +28,7 @@ groups=("archzfs-linux")
 provides=("zfs-utils")
 install=zfs-utils.install
 conflicts=("zfs-utils")
-replaces=("zfs-utils-linux", "zfs-utils-linux-lts")
+replaces=("zfs-utils-linux", "zfs-utils-linux-lts" "zfs-utils-common")
 backup=('etc/zfs/zed.d/zed.rc' 'etc/default/zfs')
 
 build() {
