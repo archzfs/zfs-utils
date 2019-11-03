@@ -8,7 +8,7 @@
 pkgname="zfs-utils"
 
 pkgver=0.8.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel module support files for the Zettabyte File System."
 makedepends=("python" "python-setuptools" "python-cffi")
 optdepends=("python: pyzfs and extra utilities", "python-cffi: pyzfs")
@@ -28,7 +28,7 @@ provides=("zfs-utils" "spl-utils")
 install=zfs-utils.install
 conflicts=("zfs-utils" "spl-utils")
 replaces=("zfs-utils-linux" "zfs-utils-linux-lts" "zfs-utils-common")
-backup=('etc/zfs/zed.d/zed.rc' 'etc/default/zfs' 'etc/modules-load.d/zfs.conf')
+backup=('etc/zfs/zed.d/zed.rc' 'etc/default/zfs' 'etc/modules-load.d/zfs.conf' 'etc/sudoers.d/zfs')
 
 build() {
     cd "${srcdir}/zfs-${pkgver}"
@@ -55,6 +55,7 @@ package() {
     printf "%s\n" "zfs" > "${pkgdir}/etc/modules-load.d/zfs.conf"
     # fix permissions
     chmod 750 ${pkgdir}/etc/sudoers.d
+    chmod 440 ${pkgdir}/etc/sudoers.d/zfs
     # Install the support files
     install -D -m644 "${srcdir}"/zfs-utils.initcpio.hook "${pkgdir}"/usr/lib/initcpio/hooks/zfs
     install -D -m644 "${srcdir}"/zfs-utils.initcpio.install "${pkgdir}"/usr/lib/initcpio/install/zfs
