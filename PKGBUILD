@@ -8,7 +8,7 @@
 pkgname="zfs-utils"
 
 pkgver=0.8.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel module support files for the Zettabyte File System."
 makedepends=("python" "python-setuptools" "python-cffi")
 optdepends=("python: pyzfs and extra utilities", "python-cffi: pyzfs")
@@ -35,7 +35,7 @@ build() {
     ./autogen.sh
     ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin --with-mounthelperdir=/usr/bin \
                 --libdir=/usr/lib --datadir=/usr/share --includedir=/usr/include \
-                --with-udevdir=/lib/udev --libexecdir=/usr/lib/zfs-${pkgver} \
+                --with-udevdir=/usr/lib/udev --libexecdir=/usr/lib \
                 --with-config=user --enable-systemd --enable-pyzfs
     make
 }
@@ -47,9 +47,6 @@ package() {
     rm -r "${pkgdir}"/etc/init.d
     rm -r "${pkgdir}"/usr/share/initramfs-tools
     rm -r "${pkgdir}"/usr/lib/modules-load.d
-    # move module tree /lib -> /usr/lib
-    cp -r "${pkgdir}"/{lib,usr}
-    rm -r "${pkgdir}"/lib
     # Autoload the zfs module at boot
     mkdir -p "${pkgdir}/etc/modules-load.d"
     printf "%s\n" "zfs" > "${pkgdir}/etc/modules-load.d/zfs.conf"
