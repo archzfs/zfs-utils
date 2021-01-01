@@ -27,10 +27,12 @@ pkgbase = zfs-utils
 	source = zfs-utils.initcpio.install
 	source = zfs-utils.initcpio.hook
 	source = zfs-utils.initcpio.zfsencryptssh.install
+	source = autoconf-270-compatibility.patch
 	sha256sums = 3403bf8e993f3c9d772f768142117df47bdbbb8e9bbf85a29c0e166f577f9311
 	sha256sums = 29a8a6d76fff01b71ef1990526785405d9c9410bdea417b08b56107210d00b10
 	sha256sums = 449a6db4abd3f166562bb67a63950af053e9ec07eabbfcdff827c5ed0113a2d6
 	sha256sums = 29080a84e5d7e36e63c4412b98646043724621245b36e5288f5fed6914da5b68
+	sha256sums = dc82ee4e62f76b68d972423909c38ced28dea876c6ef4f19037a24a8dbb2fff5
 
 pkgname = zfs-utils
 
