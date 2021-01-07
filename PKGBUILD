@@ -7,7 +7,7 @@
 #
 pkgname="zfs-utils"
 
-pkgver=2.0.0
+pkgver=2.0.1
 pkgrel=1
 pkgdesc="Kernel module support files for the Zettabyte File System."
 makedepends=("python" "python-setuptools" "python-cffi")
@@ -17,13 +17,11 @@ url="http://zfsonlinux.org/"
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
         "zfs-utils.initcpio.install"
         "zfs-utils.initcpio.hook"
-        "zfs-utils.initcpio.zfsencryptssh.install"
-        "autoconf-270-compatibility.patch")
-sha256sums=("3403bf8e993f3c9d772f768142117df47bdbbb8e9bbf85a29c0e166f577f9311"
+        "zfs-utils.initcpio.zfsencryptssh.install")
+sha256sums=("71510a6381d9910d75fa52d7bbf0863aa80ff88f337c8a023e267f4ba8486978"
             "29a8a6d76fff01b71ef1990526785405d9c9410bdea417b08b56107210d00b10"
             "449a6db4abd3f166562bb67a63950af053e9ec07eabbfcdff827c5ed0113a2d6"
-            "29080a84e5d7e36e63c4412b98646043724621245b36e5288f5fed6914da5b68"
-            "dc82ee4e62f76b68d972423909c38ced28dea876c6ef4f19037a24a8dbb2fff5")
+            "29080a84e5d7e36e63c4412b98646043724621245b36e5288f5fed6914da5b68")
 license=("CDDL")
 groups=("archzfs-linux")
 provides=("zfs-utils" "spl-utils")
@@ -31,10 +29,6 @@ install=zfs-utils.install
 conflicts=("zfs-utils" "spl-utils")
 replaces=("zfs-utils-linux" "zfs-utils-linux-lts" "zfs-utils-common")
 backup=('etc/zfs/zed.d/zed.rc' 'etc/default/zfs' 'etc/modules-load.d/zfs.conf' 'etc/sudoers.d/zfs')
-prepare() {
-    cd "${srcdir}/zfs-${pkgver}"
-    patch -Np1 -i ${srcdir}/autoconf-270-compatibility.patch
-}
 
 build() {
     cd "${srcdir}/zfs-${pkgver}"
