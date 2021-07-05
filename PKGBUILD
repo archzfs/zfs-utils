@@ -7,8 +7,8 @@
 #
 pkgname="zfs-utils"
 
-pkgver=2.0.5
-pkgrel=1
+pkgver=2.1.0
+pkgrel=2
 pkgdesc="Kernel module support files for the Zettabyte File System."
 makedepends=("python" "python-setuptools" "python-cffi")
 optdepends=("python: pyzfs and extra utilities", "python-cffi: pyzfs")
@@ -18,7 +18,7 @@ source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-$
         "zfs-utils.initcpio.install"
         "zfs-utils.initcpio.hook"
         "zfs-utils.initcpio.zfsencryptssh.install")
-sha256sums=("3a17498d704ebf4c5d7231660f6fb44ae07a1545519f567452a4270851a86ec9"
+sha256sums=("60bddcb630284c771dcf5a1109ca9329d16523a3a40a374019955cfbf97bf34f"
             "29a8a6d76fff01b71ef1990526785405d9c9410bdea417b08b56107210d00b10"
             "ad3e7244aca20fce005860c5118d46a77a0b4f5644d73e9648ea3ba5ff87c4c3"
             "93e6ac4e16f6b38b2fa397a63327bcf7001111e3a58eb5fb97c888098c932a51")
@@ -36,7 +36,8 @@ build() {
     ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin --with-mounthelperdir=/usr/bin \
                 --libdir=/usr/lib --datadir=/usr/share --includedir=/usr/include \
                 --with-udevdir=/usr/lib/udev --libexecdir=/usr/lib \
-                --with-config=user --enable-systemd --enable-pyzfs
+                --with-config=user --enable-systemd --enable-pyzfs \
+                --with-zfsexecdir=/usr/lib/zfs
     make
 }
 
