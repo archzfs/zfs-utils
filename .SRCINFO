@@ -1,7 +1,7 @@
 pkgbase = zfs-utils
 	pkgdesc = Kernel module support files for the Zettabyte File System.
 	pkgver = 2.1.6
-	pkgrel = 1
+	pkgrel = 2
 	url = http://zfsonlinux.org/
 	install = zfs-utils.install
 	arch = x86_64
