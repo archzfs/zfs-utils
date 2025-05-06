@@ -62,7 +62,7 @@ zfs_decrypt_fs() {
                 udevadm settle
 
                 # Wait for udev up to 10 seconds
-                if [ ! -r "${keyfile}" ]; then 
+                if [ ! -r "${keyfile}" ]; then
                     echo "Waiting for key ${keyfile} for ${encryptionroot}..."
                     for _ in $(seq 1 20); do
                         sleep 0.5s
@@ -80,13 +80,21 @@ zfs_decrypt_fs() {
     # Loop until key is loaded here or by another vector (SSH, for instance)
     while [ "$(zfs get -H -o value keystatus "${encryptionroot}")" != "available" ]; do
         # Try the default loading mechanism
-        zfs load-key "${encryptionroot}" && break
+        if [ "${keylocation}" == "prompt" ] && command -v plymouth >/dev/null 2>&1 && plymouth --ping 2>/dev/null; then
+            plymouth ask-for-password --prompt="Enter passphrase for '${encryptionroot}'" --command="zfs load-key ${encryptionroot}" --number-of-tries=1 && break
+        else
+            zfs load-key "${encryptionroot}" && break
+        fi
 
         # Load failed, try a prompt if the failure was not a prompt
         if [ -n "${prompt_override}" ]; then
-            echo "Unable to load key ${keylocation}; please type the passphrase"
-            echo "To retry the file, interrupt now or repeatedly input a wrong passphrase"
-            zfs load-key -L prompt "${encryptionroot}" && break
+            if command -v plymouth >/dev/null 2>&1 && plymouth --ping 2>/dev/null; then
+                plymouth ask-for-password --prompt="Unable to load key ${keylocation}; please type the passphrase. To retry the file, interrupt now or repeatedly input a wrong passphrase" --command="zfs load-key ${encryptionroot}" --number-of-tries=1 && break
+            else
+                echo "Unable to load key ${keylocation}; please type the passphrase"
+                echo "To retry the file, interrupt now or repeatedly input a wrong passphrase"
+                zfs load-key -L prompt "${encryptionroot}" && break
+            fi
         fi
 
         # Throttle retry attempts
